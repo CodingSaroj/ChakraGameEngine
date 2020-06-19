@@ -9,7 +9,7 @@
 #include "window/WindowAttribs.hpp"
 
 #if CHK_WINDOW_API == GLFW
-    #include "platform/Window/WindowGLFW.hpp"
+    #include "platform/window/WindowGLFW.hpp"
 #endif
 
 namespace Chakra

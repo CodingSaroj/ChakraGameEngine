@@ -30,4 +30,6 @@
     #define CHK_LOG_LEVEL 3
 #endif
 
+#include "ChakraPCH.hpp"
+
 #endif

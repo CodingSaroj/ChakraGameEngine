@@ -1,6 +1,8 @@
 #ifndef CHAKRA_WINDOW_EVENTS_HPP
 #define CHAKRA_WINDOW_EVENTS_HPP
 
+#include "core/Common.hpp"
+
 #include "core/EventTypes.hpp"
 #include "core/Event.hpp"
 

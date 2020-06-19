@@ -1,6 +1,9 @@
 #include "Asset.hpp"
 
-Chakra::Asset::Asset(AssetType type)
-    : m_Type(type)
+namespace Chakra
 {
+    Asset::Asset(AssetMetaType metaType)
+        : m_MetaType(metaType)
+    {
+    }
 }

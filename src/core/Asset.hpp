@@ -3,18 +3,21 @@
 
 namespace Chakra
 {
-    enum class AssetType
+    enum class AssetMetaType
     {
-        MeshBMSF
+        BinaryData,
+        TextData,
+        XMLTree,
+        Custom
     };
 
     class Asset
     {
         public:
-            Asset(AssetType type);
+            Asset(AssetMetaType metaType);
 
         private:
-            AssetType m_Type;
+            AssetMetaType m_MetaType;
     };
 }
 

@@ -1,6 +1,8 @@
 #ifndef CHAKRA_LAYER_HPP
 #define CHAKRA_LAYER_HPP
 
+#include "core/Common.hpp"
+
 #include "core/Event.hpp"
 
 namespace Chakra

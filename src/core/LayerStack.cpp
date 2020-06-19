@@ -1,30 +1,33 @@
 #include "LayerStack.hpp"
 
-Chakra::LayerStack::~LayerStack()
+namespace Chakra
 {
-    for (Layer * layer : m_Layers)
+    LayerStack::~LayerStack()
     {
-        layer->OnDetach();
-    }
-}
-
-void Chakra::LayerStack::push(Layer * layer)
-{
-    m_Layers.emplace_back(layer);
-    layer->OnAttach();
-}
-
-void Chakra::LayerStack::propagate(Event && event)
-{
-    for (Layer * layer : m_Layers)
-    {
-        if (!event.m_Handled)
+        for (Layer * layer : m_Layers)
         {
-            event.m_Handled = layer->OnEvent(&event);
+            layer->OnDetach();
         }
-        else
+    }
+    
+    void LayerStack::push(Layer * layer)
+    {
+        m_Layers.emplace_back(layer);
+        layer->OnAttach();
+    }
+    
+    void LayerStack::propagate(Event && event)
+    {
+        for (Layer * layer : m_Layers)
         {
-            break;
+            if (!event.m_Handled)
+            {
+                event.m_Handled = layer->OnEvent(&event);
+            }
+            else
+            {
+                break;
+            }
         }
     }
 }

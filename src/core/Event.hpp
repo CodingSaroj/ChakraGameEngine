@@ -1,6 +1,8 @@
 #ifndef CHAKRA_EVENT_HPP
 #define CHAKRA_EVENT_HPP
 
+#include "core/Common.hpp"
+
 #include "core/EventTypes.hpp"
 
 namespace Chakra

@@ -1,6 +1,8 @@
 #ifndef CHAKRA_APPLICATION_HPP
 #define CHAKRA_APPLICATION_HPP
 
+#include "core/Common.hpp"
+
 #include "core/Logger.hpp"
 #include "core/Layer.hpp"
 #include "core/LayerStack.hpp"

@@ -1,8 +1,7 @@
 #ifndef CHAKRA_INPUT_HPP
 #define CHAKRA_INPUT_HPP
 
-#include <algorithm>
-#include <vector>
+#include "core/Common.hpp"
 
 #include "core/Layer.hpp"
 

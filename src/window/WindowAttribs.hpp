@@ -1,7 +1,7 @@
 #ifndef CHAKRA_WINDOW_ATTRIBS_HPP
 #define CHAKRA_WINDOW_ATTRIBS_HPP
 
-#include <iostream>
+#include "core/Common.hpp"
 
 namespace Chakra
 {

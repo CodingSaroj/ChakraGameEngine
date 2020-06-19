@@ -1,7 +1,7 @@
 #ifndef CHAKRA_WINDOW_GLFW_HPP
 #define CHAKRA_WINDOW_GLFW_HPP
 
-#include <functional>
+#include "core/Common.hpp"
 
 #include <GLFW/glfw3.h>
 

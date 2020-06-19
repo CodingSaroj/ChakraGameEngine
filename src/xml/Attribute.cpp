@@ -1,11 +1,17 @@
 #include "Attribute.hpp"
 
-Chakra::XML::Attribute::XMLAttribute(const std::string & value)
-    : m_Value(value)
+namespace Chakra
 {
-}
-
-std::string getValue()
-{
-    return m_Value;
+    namespace XML
+    {
+        Attribute::Attribute(const std::string & value)
+            : m_Value(value)
+        {
+        }
+        
+        std::string Attribute::getValue()
+        {
+            return m_Value;
+        }
+    }
 }

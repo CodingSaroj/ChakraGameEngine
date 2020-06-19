@@ -1,8 +1,6 @@
 #ifndef CHAKRA_LOGGER_HPP
 #define CHAKRA_LOGGER_HPP
 
-#include <iostream>
-
 #include "core/Common.hpp"
 
 namespace Chakra

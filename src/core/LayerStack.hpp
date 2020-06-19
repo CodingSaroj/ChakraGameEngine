@@ -1,7 +1,7 @@
 #ifndef CHAKRA_LAYER_STACK_HPP
 #define CHAKRA_LAYER_STACK_HPP
 
-#include <vector>
+#include "core/Common.hpp"
 
 #include "core/Layer.hpp"
 #include "core/Event.hpp"

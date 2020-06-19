@@ -1,6 +1,0 @@
-[requires]
-glfw/3.3.2@bincrafters/stable
-libxml2/2.9.9@bincrafters/stable
-
-[generators]
-premake

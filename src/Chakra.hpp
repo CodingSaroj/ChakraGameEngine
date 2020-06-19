@@ -6,7 +6,15 @@
 #include "core/ecs/Scene.hpp"
 #include "core/ecs/Builder.hpp"
 
-#include "core/math/Vector.hpp"
-#include "core/math/Matrix.hpp"
+#include "core/AssetManager.hpp"
+#include "core/Assets.hpp"
+
+namespace Chakra
+{
+    std::vector<std::function<void()>> GetStartUpFunctions()
+    {
+        return { Setup };
+    }
+}
 
 #endif

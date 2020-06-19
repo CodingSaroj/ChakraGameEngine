@@ -1,8 +1,6 @@
-include "conanbuildinfo.premake.lua"
+outputdir = "../../../lib/"
 
 workspace "Chakra"
-    conan_basic_setup()
-
     configurations
     {
         "Debug",
@@ -15,11 +13,18 @@ workspace "Chakra"
         "Linux64"
     }
 
+    include "external/src/GLFW/premake5.lua"
+
     project "Chakra"
         kind "SharedLib"
         language "C++"
         cppdialect "C++17"
+
+        objdir "obj/%{cfg.system}/%{cfg.buildcfg}/%{cfg.architecture}/"
         targetdir "lib/%{cfg.system}/%{cfg.buildcfg}/%{cfg.architecture}/"
+
+        pchheader "pch/ChakraPCH.hpp"
+        pchsource "pch/ChakraPCH.cpp"
 
         files
         {
@@ -28,29 +33,28 @@ workspace "Chakra"
 
         includedirs
         {
-            conan_includedirs,
+            "external/src/GLFW/include",
+            "external/src/glm/",
+            "pch/",
             "src/"
         }
 
         libdirs
         {
-            conan_linkdirs
+            "external/lib/"
         }
 
         links
         {
-            conan_libs
-        }
-
-        linkoptions
-        {
-            conan_exelinkflags
+            "GLFW"
         }
 
         filter "configurations:Debug"
             symbols "On"
             optimize "Off"
+            runtime "Debug"
 
         filter "configurations:Release"
             symbols "Off"
             optimize "Full"
+            runtime "Release"

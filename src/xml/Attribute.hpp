@@ -1,7 +1,7 @@
 #ifndef CHAKRA_XML_ATTRIBUTE_HPP
 #define CHAKRA_XML_ATTRIBUTE_HPP
 
-#include <string>
+#include "core/Common.hpp"
 
 namespace Chakra
 {
@@ -10,6 +10,7 @@ namespace Chakra
         class Attribute
         {
             public:
+                Attribute() = default;
                 Attribute(const std::string & value);
 
                 std::string getValue();
