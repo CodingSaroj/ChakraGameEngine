@@ -2,22 +2,57 @@
 
 namespace Chakra
 {
-    CloseEvent::CloseEvent()
-        : Event(EventType::OnClose)
+    WindowCreateEvent::WindowCreateEvent()
+        : Event(EventType::OnWindowCreate)
+    {
+    }
+
+    WindowDestroyEvent::WindowDestroyEvent()
+        : Event(EventType::OnWindowDestroy)
+    {
+    }
+
+    WindowResizeEvent::WindowResizeEvent(int width, int height)
+        : Event(EventType::OnWindowResize), m_Width(width), m_Height(height)
+    {
+    }
+
+    int WindowResizeEvent::GetWidth()
+    {
+        return m_Width;
+    }
+
+    int WindowResizeEvent::GetHeight()
+    {
+        return m_Height;
+    }
+
+    ImGuiRenderEvent::ImGuiRenderEvent()
+        : Event(EventType::OnImGuiRender)
     {
     }
     
+    KeyTypeEvent::KeyTypeEvent(unsigned int unicodeChar)
+        : Event(EventType::OnKeyType), m_UnicodeChar(unicodeChar)
+    {
+    }
+
+    unsigned int KeyTypeEvent::GetUnicodeChar()
+    {
+        return m_UnicodeChar;
+    }
+
     KeyPressEvent::KeyPressEvent(int key, int modifier)
         : Event(EventType::OnKeyPress), m_Key(key), m_Modifier(modifier)
     {
     }
     
-    int KeyPressEvent::getKey()
+    int KeyPressEvent::GetKey()
     {
         return m_Key;
     }
     
-    int KeyPressEvent::getModifier()
+    int KeyPressEvent::GetModifier()
     {
         return m_Modifier;
     }
@@ -27,12 +62,12 @@ namespace Chakra
     {
     }
     
-    int KeyReleaseEvent::getKey()
+    int KeyReleaseEvent::GetKey()
     {
         return m_Key;
     }
     
-    int KeyReleaseEvent::getModifier()
+    int KeyReleaseEvent::GetModifier()
     {
         return m_Modifier;
     }
@@ -42,12 +77,12 @@ namespace Chakra
     {
     }
     
-    int MouseButtonPressEvent::getButton()
+    int MouseButtonPressEvent::GetButton()
     {
         return m_Button;
     }
     
-    int MouseButtonPressEvent::getModifier()
+    int MouseButtonPressEvent::GetModifier()
     {
         return m_Modifier;
     }
@@ -57,12 +92,12 @@ namespace Chakra
     {
     }
     
-    int MouseButtonReleaseEvent::getButton()
+    int MouseButtonReleaseEvent::GetButton()
     {
         return m_Button;
     }
     
-    int MouseButtonReleaseEvent::getModifier()
+    int MouseButtonReleaseEvent::GetModifier()
     {
         return m_Modifier;
     }
@@ -72,12 +107,12 @@ namespace Chakra
     {
     }
     
-    double ScrollEvent::getXOffset()
+    double ScrollEvent::GetXOffset()
     {
         return m_XOffset;
     }
     
-    double ScrollEvent::getYOffset()
+    double ScrollEvent::GetYOffset()
     {
         return m_YOffset;
     }
@@ -87,12 +122,12 @@ namespace Chakra
     {
     }
     
-    double MouseMoveEvent::getX()
+    double MouseMoveEvent::GetX()
     {
         return m_X;
     }
     
-    double MouseMoveEvent::getY()
+    double MouseMoveEvent::GetY()
     {
         return m_Y;
     }

@@ -3,12 +3,7 @@
 namespace Chakra
 {
     Event::Event(EventType type)
-        : m_Handled(false), m_Type(type)
+        : m_Type(type), m_Handled(false)
     {
-    }
-    
-    EventType Event::getType()
-    {
-        return m_Type;
     }
 }

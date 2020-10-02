@@ -2,7 +2,7 @@
 
 namespace Chakra
 {
-    WindowAttribs::WindowAttribs(int width, int height, std::string title, bool vsync)
+    WindowAttribs::WindowAttribs(int width, int height, const std::string & title, bool vsync)
         : Width(width), Height(height), Title(title), VSync(vsync)
     {
     }

@@ -2,136 +2,132 @@
 
 namespace Chakra
 {
-    std::vector<int> Input::m_PressedKeys;
-    std::vector<int> Input::m_ReleasedKeys;
-    std::vector<int> Input::m_PressedMouseButtons;
-    std::vector<int> Input::m_ReleasedMouseButtons;
+    std::vector<int> Input::s_PressedKeys;
+    std::vector<int> Input::s_ReleasedKeys;
+    std::vector<int> Input::s_PressedMouseButtons;
+    std::vector<int> Input::s_ReleasedMouseButtons;
     
-    int    Input::m_ModPressed;
-    int    Input::m_ModReleased;
+    int    Input::s_ModPressed;
+    int    Input::s_ModReleased;
     
-    double Input::m_CursorPosX;
-    double Input::m_CursorPosY;
-    double Input::m_ScrollOffsetX;
-    double Input::m_ScrollOffsetY;
-    
-    void Input::OnAttach()
-    {
-    }
+    double Input::s_CursorPosX;
+    double Input::s_CursorPosY;
+    double Input::s_ScrollOffsetX;
+    double Input::s_ScrollOffsetY;
     
     bool Input::OnEvent(Event * e)
     {
-        if (e->getType() == EventType::OnKeyPress)
+        if (e->Type() == EventType::OnKeyPress)
         {
             KeyPressEvent * kpe = (KeyPressEvent *)e;
-            Input::m_PressedKeys.push_back(kpe->getKey());
-            Input::m_ModPressed = kpe->getModifier();
+            Input::s_PressedKeys.push_back(kpe->GetKey());
+            Input::s_ModPressed = kpe->GetModifier();
             return true;
         }
-        else if (e->getType() == EventType::OnKeyRelease)
+        else if (e->Type() == EventType::OnKeyRelease)
         {
             KeyReleaseEvent * kre = (KeyReleaseEvent *)e;
-            Input::m_ReleasedKeys.push_back(kre->getKey());
-            Input::m_ModReleased = kre->getModifier();
+            Input::s_ReleasedKeys.push_back(kre->GetKey());
+            Input::s_ModReleased = kre->GetModifier();
     
-            m_PressedKeys.erase(std::find(m_PressedKeys.begin(), m_PressedKeys.end(), kre->getKey()));
+            if (std::find(s_PressedKeys.begin(), s_PressedKeys.end(), kre->GetKey()) != s_PressedKeys.end())
+            {
+                s_PressedKeys.erase(std::find(s_PressedKeys.begin(), s_PressedKeys.end(), kre->GetKey()));
+            }
     
             return true;
-        }
-        else if (e->getType() == EventType::OnMouseButtonPress)
+        } 
+        else if (e->Type() == EventType::OnMouseButtonPress)
         {
             MouseButtonPressEvent * mpe = (MouseButtonPressEvent *)e;
-            Input::m_PressedMouseButtons.push_back(mpe->getButton());
-            Input::m_ModPressed = mpe->getModifier();
+            Input::s_PressedMouseButtons.push_back(mpe->GetButton());
+            Input::s_ModPressed = mpe->GetModifier();
             return true;
         }
-        else if (e->getType() == EventType::OnMouseButtonRelease)
+        else if (e->Type() == EventType::OnMouseButtonRelease)
         {
             MouseButtonReleaseEvent * mre = (MouseButtonReleaseEvent *)e;
-            Input::m_ReleasedMouseButtons.push_back(mre->getButton());
-            Input::m_ModReleased = mre->getModifier();
+            Input::s_ReleasedMouseButtons.push_back(mre->GetButton());
+            Input::s_ModReleased = mre->GetModifier();
     
-            m_PressedMouseButtons.erase(std::find(m_PressedMouseButtons.begin(), m_PressedMouseButtons.end(), mre->getButton()));
+            if (std::find(s_PressedMouseButtons.begin(), s_PressedMouseButtons.end(), mre->GetButton()) != s_PressedMouseButtons.end())
+            {
+                s_PressedMouseButtons.erase(std::find(s_PressedMouseButtons.begin(), s_PressedMouseButtons.end(), mre->GetButton()));
+            }
     
             return true;
         }
-        else if (e->getType() == EventType::OnScroll)
+        else if (e->Type() == EventType::OnScroll)
         {
             ScrollEvent * se = (ScrollEvent *)e;
-            Input::m_ScrollOffsetX = se->getXOffset();
-            Input::m_ScrollOffsetY = se->getYOffset();
+            Input::s_ScrollOffsetX = se->GetXOffset();
+            Input::s_ScrollOffsetY = se->GetYOffset();
             return true;
         }
-        else if (e->getType() == EventType::OnMouseMove)
+        else if (e->Type() == EventType::OnMouseMove)
         {
             MouseMoveEvent * me = (MouseMoveEvent *)e;
-            Input::m_CursorPosX = me->getX();
-            Input::m_CursorPosY = me->getY();
+            Input::s_CursorPosX = me->GetX();
+            Input::s_CursorPosY = me->GetY();
             return true;
         }
-        else
-        {
-            return false;
-        }
+
+        return false;
     }
     
-    void Input::OnDetach()
+    bool Input::IsModPressed(int mod)
     {
+        return s_ModPressed == mod;
     }
     
-    bool Input::isModPressed(int mod)
+    bool Input::IsModReleased(int mod)
     {
-        return m_ModPressed == mod;
+        return s_ModReleased == mod;
     }
     
-    bool Input::isModReleased(int mod)
+    bool Input::IsKeyPressed(int key)
     {
-        return m_ModReleased == mod;
+        return std::find(s_PressedKeys.begin(), s_PressedKeys.end(), key) != s_PressedKeys.end();
     }
     
-    bool Input::isKeyPressed(int key)
+    bool Input::IsKeyReleased(int key)
     {
-        return std::find(m_PressedKeys.begin(), m_PressedKeys.end(), key) != m_PressedKeys.end();
+        return std::find(s_ReleasedKeys.begin(), s_ReleasedKeys.end(), key) != s_ReleasedKeys.end();
     }
     
-    bool Input::isKeyReleased(int key)
+    bool Input::IsMouseButtonPressed(int button)
     {
-        return std::find(m_ReleasedKeys.begin(), m_ReleasedKeys.end(), key) != m_ReleasedKeys.end();
+        return std::find(s_PressedMouseButtons.begin(), s_PressedMouseButtons.end(), button) != s_PressedMouseButtons.end();
     }
     
-    bool Input::isMouseButtonPressed(int button)
+    bool Input::IsMouseButtonReleased(int button)
     {
-        return std::find(m_PressedMouseButtons.begin(), m_PressedMouseButtons.end(), button) != m_PressedMouseButtons.end();
+        return std::find(s_ReleasedMouseButtons.begin(), s_ReleasedMouseButtons.end(), button) != s_ReleasedMouseButtons.end();
     }
     
-    bool Input::isMouseButtonReleased(int button)
+    double Input::GetCursorPosX()
     {
-        return std::find(m_ReleasedMouseButtons.begin(), m_ReleasedMouseButtons.end(), button) != m_ReleasedMouseButtons.end();
+        return s_CursorPosX;
     }
     
-    double Input::getCursorPosX()
+    double Input::GetCursorPosY()
     {
-        return m_CursorPosX;
+        return s_CursorPosY;
     }
     
-    double Input::getCursorPosY()
+    double Input::GetScrollOffsetX()
     {
-        return m_CursorPosY;
+        return s_ScrollOffsetX;
     }
     
-    double Input::getScrollOffsetX()
+    double Input::GetScrollOffsetY()
     {
-        return m_ScrollOffsetX;
+        return s_ScrollOffsetY;
     }
     
-    double Input::getScrollOffsetY()
+    void Input::Clear()
     {
-        return m_ScrollOffsetY;
-    }
-    
-    void Input::clear()
-    {
-        m_ReleasedKeys.clear();
-        m_ReleasedMouseButtons.clear();
+        s_ReleasedKeys.clear();
+        s_ReleasedMouseButtons.clear();
     }
 }

@@ -1,0 +1,34 @@
+FileType: Scene
+Entities:
+  - Components:
+      - ComponentType: Tag
+        Tag: "Main Camera"
+      - ComponentType: Transform
+        Position: [0, 0, 0]
+        Rotation: [0, 0, -1.86264715e-09]
+        Scale: [1, 1, 1]
+      - ComponentType: Camera
+        MainCamera: true
+        ProjectionType: ORTHOGRAPHIC
+        PerspectiveFOV: 45
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        OrthographicScale: 10
+        OrthographicNear: -1
+        OrthographicFar: 1
+  - Components:
+      - ComponentType: Tag
+        Tag: "AwesomeFace"
+      - ComponentType: Transform
+        Position: [0, 0, 0]
+        Rotation: [0, -0, 1.86264537e-09]
+        Scale: [1, 1, 1]
+      - ComponentType: Material
+        Mesh: Square
+        Shader: Shader
+        Textures: [Texture]
+        UniformBlockName: u_MaterialData
+        UniformVariables:
+          - u_TintColor:
+              Type: "Vector4"
+              Value: [1, 1, 1, 1]

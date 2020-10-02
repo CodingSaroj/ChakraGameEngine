@@ -1,5 +1,5 @@
-#ifndef CHAKRA_EVENT_HPP
-#define CHAKRA_EVENT_HPP
+#ifndef CHAKRA_CORE_EVENT_HPP
+#define CHAKRA_CORE_EVENT_HPP
 
 #include "core/Common.hpp"
 
@@ -10,14 +10,14 @@ namespace Chakra
     class Event
     {
         public:
-            bool m_Handled;
+            explicit Event(EventType type);
 
-            Event(EventType type);
-
-            EventType   getType();
+            constexpr bool &    Handled() { return m_Handled; }
+            constexpr EventType Type()    { return m_Type; }
 
         private:
             EventType m_Type;
+            bool      m_Handled;
     };
 }
 

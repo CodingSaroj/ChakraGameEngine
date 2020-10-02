@@ -2,48 +2,10 @@
 
 namespace Chakra
 {
-    bool             Logger::initialized = false;
-    std::ostream *   Logger::out;
+    std::ostream * Logger::s_Out = &std::cout;
     
-    void Logger::Initialize(std::ostream & _out)
+    void Logger::SetOStream(std::ostream & out)
     {
-        initialized = true;
-        out         = &_out;
-    }
-    
-    void Logger::LogInfo(const std::string & section, const std::string & message)
-    {
-        #if CHK_LOG_LEVEL >= 1
-            if (!initialized)
-            {
-                return;
-            }
-    
-            ((std::ostream &)*out)<<"INFO::"<<section<<": "<<message<<".\n";
-        #endif
-    }
-    
-    void Logger::LogWarning(const std::string & section, const std::string & message)
-    {
-        #if CHK_LOG_LEVEL >= 2
-            if (!initialized)
-            {
-                return;
-            }
-    
-            ((std::ostream &)*out)<<"WARNING::"<<section<<": "<<message<<".\n";
-        #endif
-    }
-    
-    void Logger::LogError(const std::string & section, const std::string & message)
-    {
-        #if CHK_LOG_LEVEL == 3
-            if (!initialized)
-            {
-                return;
-            }
-    
-            ((std::ostream &)*out)<<"ERROR::"<<section<<": "<<message<<".\n";
-        #endif
+        s_Out = &out;
     }
 }

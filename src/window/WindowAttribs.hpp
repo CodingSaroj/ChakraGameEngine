@@ -1,5 +1,5 @@
-#ifndef CHAKRA_WINDOW_ATTRIBS_HPP
-#define CHAKRA_WINDOW_ATTRIBS_HPP
+#ifndef CHAKRA_WINDOW_WINDOW_ATTRIBS_HPP
+#define CHAKRA_WINDOW_WINDOW_ATTRIBS_HPP
 
 #include "core/Common.hpp"
 
@@ -12,7 +12,7 @@ namespace Chakra
         std::string Title;
         bool        VSync;
 
-        WindowAttribs(int width, int height, std::string title, bool vsync);
+        WindowAttribs(int width, int height, const std::string & title, bool vsync);
     };
 }
 

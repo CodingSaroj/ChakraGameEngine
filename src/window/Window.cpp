@@ -2,10 +2,10 @@
 
 namespace Chakra
 {
-    Window::Window(const WindowAttribs & attribs, LayerStack & layerStack)
+    Window::Window(const WindowAttribs & attribs)
     {
         #if CHK_WINDOW_API == GLFW
-            m_Window = new WindowGLFW(attribs, layerStack);
+            m_Window = new WindowGLFW(attribs);
         #endif
     }
     
@@ -14,13 +14,18 @@ namespace Chakra
         delete m_Window;
     }
     
-    void Window::create()
+    void Window::Create()
     {
-        m_Window->create();
+        m_Window->Create();
     }
     
-    void Window::update()
+    void Window::Update(std::function<void()> updateRoutine)
     {
-        m_Window->update();
+        m_Window->Update(updateRoutine);
+    }
+
+    void * Window::GetRaw() const
+    {
+        return m_Window->GetRaw();
     }
 }

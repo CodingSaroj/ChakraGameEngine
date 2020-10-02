@@ -1,9 +1,11 @@
 #include "WindowGLFW.hpp"
 
+#include "core/Application.hpp"
+
 namespace Chakra
 {
-    WindowGLFW::WindowGLFW(const WindowAttribs & attribs, LayerStack & layerStack)
-        : m_Attribs(attribs), m_LayerStack(layerStack)
+    WindowGLFW::WindowGLFW(const WindowAttribs & attribs)
+        : m_Attribs(attribs), m_Window(nullptr)
     {
     }
     
@@ -12,92 +14,99 @@ namespace Chakra
         glfwDestroyWindow(m_Window);
         glfwTerminate();
     }
+
+    static void resizeCallback(GLFWwindow * window, int width, int height)
+    {
+        Application::GetApplication().GetEventManager().Propagate(WindowResizeEvent(width, height));
+    }
     
     static void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod)
     {
-        WindowGLFW & win = *(WindowGLFW *)glfwGetWindowUserPointer(window);
-    
         if (action == GLFW_PRESS)
         {
-            win.send(KeyPressEvent(key, mod));
+            Application::GetApplication().GetEventManager().Propagate(KeyPressEvent(key, mod));
         }
         else if (action == GLFW_RELEASE)
         {
-            win.send(KeyReleaseEvent(key, mod));
+            Application::GetApplication().GetEventManager().Propagate(KeyReleaseEvent(key, mod));
         }
+    }
+
+    static void charCallback(GLFWwindow * window, unsigned int unicodeChar)
+    {
+        Application::GetApplication().GetEventManager().Propagate(KeyTypeEvent(unicodeChar));
     }
     
     static void mouseButtonCallback(GLFWwindow * window, int button, int action, int mod)
     {
-        WindowGLFW & win = *(WindowGLFW *)glfwGetWindowUserPointer(window);
-        
         if (action == GLFW_PRESS)
         {
-            win.send(MouseButtonPressEvent(button, mod));
+            Application::GetApplication().GetEventManager().Propagate(MouseButtonPressEvent(button, mod));
         }
         else if (action == GLFW_RELEASE)
         {
-            win.send(MouseButtonReleaseEvent(button, mod));
+            Application::GetApplication().GetEventManager().Propagate(MouseButtonReleaseEvent(button, mod));
         }
     }
     
     static void scrollCallback(GLFWwindow * window, double x, double y)
     {
-        WindowGLFW & win = *(WindowGLFW *)glfwGetWindowUserPointer(window);
-    
-        win.send(ScrollEvent(x, y));
+        Application::GetApplication().GetEventManager().Propagate(ScrollEvent(x, y));
     }
     
     static void cursorCallback(GLFWwindow * window, double x, double y)
     {
-        WindowGLFW & win = *(WindowGLFW *)glfwGetWindowUserPointer(window);
-    
-        win.send(MouseMoveEvent(x, y));
+        Application::GetApplication().GetEventManager().Propagate(MouseMoveEvent(x, y));
     }
     
-    void WindowGLFW::send(Event && e)
-    {
-        m_LayerStack.propagate(std::move(e));
-    }
-    
-    void WindowGLFW::create()
+    void WindowGLFW::Create()
     {
         glfwInit();
     
-        glfwWindowHint(GLFW_RESIZABLE,              GLFW_FALSE);
+        glfwWindowHint(GLFW_RESIZABLE,              GLFW_TRUE);
         glfwWindowHint(GLFW_DOUBLEBUFFER,           GLFW_TRUE);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,  3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,  3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE,         GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,  4);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,  5);
     
         m_Window = glfwCreateWindow(m_Attribs.Width, m_Attribs.Height, m_Attribs.Title.c_str(), nullptr, nullptr);
-    
-        if (!m_Window)
-        {
-            Logger::LogError("Window::GLFW", "Unable to create GLFW window");
-            exit(-1);
-        }
+
+        CHK_ASSERT(m_Window, "Window::GLFW", "Unable to create GLFW window.")
     
         glfwMakeContextCurrent(m_Window);
+
+        CHK_ASSERT(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress), "Window::GLFW", "Failed to initialize GLAD.");
     
-        glfwSetKeyCallback         (m_Window, keyCallback);
-        glfwSetMouseButtonCallback (m_Window, mouseButtonCallback);
-        glfwSetCursorPosCallback   (m_Window, cursorCallback);
-        glfwSetScrollCallback      (m_Window, scrollCallback);
+        glfwSetFramebufferSizeCallback(m_Window, resizeCallback);
+        glfwSetKeyCallback(m_Window, keyCallback);
+        glfwSetCharCallback(m_Window, charCallback);
+        glfwSetMouseButtonCallback(m_Window, mouseButtonCallback);
+        glfwSetCursorPosCallback(m_Window, cursorCallback);
+        glfwSetScrollCallback(m_Window, scrollCallback);
     
         glfwSetWindowUserPointer(m_Window, this);
     }
     
-    void WindowGLFW::update()
+    void WindowGLFW::Update(std::function<void()> updateRoutine)
     {
         if (!glfwWindowShouldClose(m_Window))
         {
             glfwPollEvents();
-    
+
+            updateRoutine();
+
+            Application::GetApplication().GetEventManager().Propagate(ImGuiRenderEvent());
+    	
             glfwSwapBuffers(m_Window);
         }
         else
         {
-            this->send(CloseEvent());
+            Application::GetApplication().GetEventManager().Propagate(WindowDestroyEvent());
         }
+    }
+
+    void * WindowGLFW::GetRaw() const
+    {
+        return (void *)m_Window;
     }
 }

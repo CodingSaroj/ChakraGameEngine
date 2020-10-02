@@ -1,9 +1,9 @@
-#ifndef CHAKRA_WINDOW_HPP
-#define CHAKRA_WINDOW_HPP
+#ifndef CHAKRA_WINDOW_WINDOW_HPP
+#define CHAKRA_WINDOW_WINDOW_HPP
 
 #include "core/Common.hpp"
 #include "core/Event.hpp"
-#include "core/LayerStack.hpp"
+#include "core/EventManager.hpp"
 
 #include "window/IWindow.hpp"
 #include "window/WindowAttribs.hpp"
@@ -17,11 +17,13 @@ namespace Chakra
     class Window : public IWindow
     {
         public:
-            Window(const WindowAttribs & attribs, LayerStack & layerStack);
+            explicit Window(const WindowAttribs & attribs);
             ~Window();
 
-            void create() override;
-            void update() override;
+            void Create() override;
+            void Update(std::function<void()> updateRoutine) override;
+
+            void * GetRaw() const override;
 
         private:
             IWindow * m_Window;

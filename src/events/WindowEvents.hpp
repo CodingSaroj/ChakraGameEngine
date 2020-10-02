@@ -1,5 +1,5 @@
-#ifndef CHAKRA_WINDOW_EVENTS_HPP
-#define CHAKRA_WINDOW_EVENTS_HPP
+#ifndef CHAKRA_EVENTS_WINDOW_EVENTS_HPP
+#define CHAKRA_EVENTS_WINDOW_EVENTS_HPP
 
 #include "core/Common.hpp"
 
@@ -8,88 +8,124 @@
 
 namespace Chakra
 {
-    class CloseEvent : public Event
+    class WindowCreateEvent : public Event
     {
-        public:
-            CloseEvent();
+    public:
+        WindowCreateEvent();
+    };
+
+    class WindowDestroyEvent : public Event
+    {
+    public:
+        WindowDestroyEvent();
+    };
+    
+    class WindowResizeEvent : public Event
+    {
+    public:
+        WindowResizeEvent(int width, int height);
+
+        int GetWidth();
+        int GetHeight();
+
+    private:
+        int m_Width;
+        int m_Height;
+    };
+
+    class ImGuiRenderEvent : public Event
+    {
+    public:
+        ImGuiRenderEvent();
+    };
+
+    class KeyTypeEvent : public Event
+    {
+    public:
+        explicit KeyTypeEvent(unsigned int unicodeChar);
+
+        unsigned int GetUnicodeChar();
+
+    private:
+        unsigned int m_UnicodeChar;
     };
 
     class KeyPressEvent : public Event
     {
-        public:
-            KeyPressEvent(int key, int modifier);
+    public:
+        KeyPressEvent(int key, int modifier);
 
-            int getKey();
-            int getModifier();
+        int GetKey();
+        int GetModifier();
 
-        private:
-            int m_Key;
-            int m_Modifier;
+    private:
+        int m_Key;
+        int m_Modifier;
     };
 
     class KeyReleaseEvent : public Event
     {
-        public:
-            KeyReleaseEvent(int key, int modifier);
+    public:
+        KeyReleaseEvent(int key, int modifier);
 
-            int getKey();
-            int getModifier();
+        int GetKey();
+        int GetModifier();
 
-        private:
-            int m_Key;
-            int m_Modifier;
+    private:
+        int m_Key;
+        int m_Modifier;
     };
 
     class MouseButtonPressEvent : public Event
     {
-        public:
-            MouseButtonPressEvent(int button, int modifier);
+    public:
+        MouseButtonPressEvent(int button, int modifier);
 
-            int getButton();
-            int getModifier();
+        int GetButton();
+        int GetModifier();
 
-        private:
-            int m_Button;
-            int m_Modifier;
+    private:
+        int m_Button;
+        int m_Modifier;
     };
 
     class MouseButtonReleaseEvent : public Event
     {
-        public:
-            MouseButtonReleaseEvent(int button, int modifier);
+    public:
+        MouseButtonReleaseEvent(int button, int modifier);
 
-            int getButton();
-            int getModifier();
+        int GetButton();
+        int GetModifier();
 
-        private:
-            int m_Button;
-            int m_Modifier;
+    private:
+        int m_Button;
+        int m_Modifier;
     };
 
     class ScrollEvent : public Event
     {
-        public:
-            ScrollEvent(double xOffset, double yOffset);
+    public:
+        ScrollEvent(double xOffset, double yOffset);
 
-            double getXOffset();
-            double getYOffset();
+        double GetXOffset();
+        double GetYOffset();
 
-        private:
-            double m_XOffset;
-            double m_YOffset;
+    private:
+        double m_XOffset;
+        double m_YOffset;
     };
 
     class MouseMoveEvent : public Event
     {
-        public:
-            MouseMoveEvent(double x, double y);
+    public:
+        MouseMoveEvent(double x, double y);
 
-            double getX();
-            double getY();
+        double GetX();
+        double GetY();
 
-        private:
-            double m_X;
-            double m_Y;
+    private:
+        double m_X;
+        double m_Y;
     };
 }
 

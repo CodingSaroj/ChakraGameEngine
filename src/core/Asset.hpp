@@ -1,23 +1,13 @@
-#ifndef CHAKRA_ASSET_HPP
-#define CHAKRA_ASSET_HPP
+#ifndef CHAKRA_CORE_ASSET_HPP
+#define CHAKRA_CORE_ASSET_HPP
+
+#include "core/Common.hpp"
 
 namespace Chakra
 {
-    enum class AssetMetaType
+    struct Asset
     {
-        BinaryData,
-        TextData,
-        XMLTree,
-        Custom
-    };
-
-    class Asset
-    {
-        public:
-            Asset(AssetMetaType metaType);
-
-        private:
-            AssetMetaType m_MetaType;
+        std::string Type;
     };
 }
 

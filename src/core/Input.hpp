@@ -1,48 +1,48 @@
-#ifndef CHAKRA_INPUT_HPP
-#define CHAKRA_INPUT_HPP
+#ifndef CHAKRA_CORE_INPUT_HPP
+#define CHAKRA_CORE_INPUT_HPP
 
 #include "core/Common.hpp"
 
-#include "core/Layer.hpp"
+#include "core/Listener.hpp"
 
 #include "events/WindowEvents.hpp"
 
+#include <imgui/imgui.h>
+
 namespace Chakra
 {
-    class Input : public Layer
+    class Input : public Listener
     {
-        public:
-            static bool isModPressed(int mod);
-            static bool isModReleased(int mod);
-            static bool isKeyPressed(int mod);
-            static bool isKeyReleased(int key);
-            static bool isMouseButtonPressed(int button);
-            static bool isMouseButtonReleased(int button);
+    public:
+        static bool IsModPressed(int mod);
+        static bool IsModReleased(int mod);
+        static bool IsKeyPressed(int key);
+        static bool IsKeyReleased(int key);
+        static bool IsMouseButtonPressed(int button);
+        static bool IsMouseButtonReleased(int button);
 
-            static double getScrollOffsetX();
-            static double getScrollOffsetY();
-            static double getCursorPosX();
-            static double getCursorPosY();
+        static double GetScrollOffsetX();
+        static double GetScrollOffsetY();
+        static double GetCursorPosX();
+        static double GetCursorPosY();
 
-            static void clear();
+        static void Clear();
 
-        private:
-            static std::vector<int> m_PressedKeys;
-            static std::vector<int> m_ReleasedKeys;
-            static std::vector<int> m_PressedMouseButtons;
-            static std::vector<int> m_ReleasedMouseButtons;
+    private:
+        static std::vector<int> s_PressedKeys;
+        static std::vector<int> s_ReleasedKeys;
+        static std::vector<int> s_PressedMouseButtons;
+        static std::vector<int> s_ReleasedMouseButtons;
 
-            static int    m_ModPressed;
-            static int    m_ModReleased;
+        static int    s_ModPressed;
+        static int    s_ModReleased;
 
-            static double m_CursorPosX;
-            static double m_CursorPosY;
-            static double m_ScrollOffsetX;
-            static double m_ScrollOffsetY;
+        static double s_CursorPosX;
+        static double s_CursorPosY;
+        static double s_ScrollOffsetX;
+        static double s_ScrollOffsetY;
 
-            void OnAttach()         override;
-            bool OnEvent(Event * e) override;
-            void OnDetach()         override;
+        bool OnEvent(Event * e) override;
     };
 }
 

@@ -1,6 +1,22 @@
-[submodule "external/src/GLFW"]
-	path = external/src/GLFW
-	url = https://github.com/TheCherno/glfw.git
+[submodule "external/src/imgui"]
+	path = external/src/imgui
+	url = https://github.com/ocornut/imgui
+	branch = docking
+[submodule "external/src/SPIRV-Cross"]
+	path = external/src/SPIRV-Cross
+	url = https://github.com/KhronosGroup/SPIRV-Cross
+[submodule "external/src/yaml-cpp"]
+	path = external/src/yaml-cpp
+	url = https://github.com/jbeder/yaml-cpp
+[submodule "external/src/implot"]
+	path = external/src/implot
+	url = https://github.com/epezent/implot
 [submodule "external/src/glm"]
 	path = external/src/glm
-	url = https://github.com/g-truc/glm.git
+	url = https://github.com/g-truc/glm
+[submodule "external/src/glfw"]
+	path = external/src/glfw
+	url = https://github.com/glfw/glfw
+[submodule "external/src/assimp"]
+	path = external/src/assimp
+	url = https://github.com/assimp/assimp

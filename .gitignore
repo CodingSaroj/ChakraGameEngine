@@ -1,0 +1,15 @@
+# Development files
+.clangd
+
+# Build folders
+bin
+lib
+obj
+
+# Build files
+Makefile
+*.make
+*.json
+
+# Testing files
+test

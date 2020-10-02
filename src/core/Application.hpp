@@ -1,50 +1,57 @@
-#ifndef CHAKRA_APPLICATION_HPP
-#define CHAKRA_APPLICATION_HPP
+#ifndef CHAKRA_CORE_APPLICATION_HPP
+#define CHAKRA_CORE_APPLICATION_HPP
 
 #include "core/Common.hpp"
-
 #include "core/Logger.hpp"
-#include "core/Layer.hpp"
-#include "core/LayerStack.hpp"
+#include "core/Time.hpp"
+#include "core/Profiler.hpp"
+#include "core/Listener.hpp"
+#include "core/EventManager.hpp"
 #include "core/Input.hpp"
+#include "core/ImGuiListener.hpp"
 
-#include "core/ecs/Scene.hpp"
+#include "scene/Scene.hpp"
 
 #include "window/Window.hpp"
 
 namespace Chakra
 {
-    class Application : public Layer
+    class Application : public Listener
     {
-        public:
-            Application(const WindowAttribs & attribs);
-            virtual ~Application() = default;
-            
-            bool isRunning();
+    public:
+        static Application & Instance(Application * application);
+        static Application & GetApplication();
 
-            void setScene(Scene & scene);
+        explicit Application(const WindowAttribs & attribs);
+        
+        bool IsRunning();
 
-            void run();
-            void quit();
+        void Run();
+        void Quit();
 
-        protected:
-            bool m_Running;
+        constexpr const Window & GetWindow() const { return m_Window; }
+        constexpr EventManager & GetEventManager() { return m_EventManager;}
 
-            void OnAttach()         override;
-            bool OnEvent(Event * e) override;
-            void OnDetach()         override;
+    protected:
+        bool m_Running;
 
-            virtual void OnCreate()  = 0;
-            virtual void OnUpdate()  = 0;
-            virtual void OnDestroy() = 0;
+        Scene m_Scene;
 
-        private:
-            Scene  m_CurrentScene;
-            Window m_Window;
-            Input  m_InputHandler;
+        EventManager  m_EventManager;
+        Window        m_Window;
+        ImGuiListener m_ImGuiListener;
+        Input         m_InputHandler;
 
-        public:
-            LayerStack m_LayerStack;
+        bool OnEvent(Event * e) override;
+
+        virtual void OnCreate();
+        virtual void OnUpdate();
+        virtual void OnDestroy();
+        virtual void OnResize(int width, int height);
+        virtual void OnImGuiRender();
+
+    private:
+        static Application * s_Application;
     };
 }
 
