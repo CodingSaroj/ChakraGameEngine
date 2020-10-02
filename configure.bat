@@ -1,5 +1,11 @@
-python3 external\projectfiles\glm.py
-python3 external\projectfiles\yaml-cpp.py
-python3 external\projectfiles\SPIRV-Cross.py
+cd external\projectfiles
 
-premake5 gmake2
+python3 glfw.py
+python3 assimp.py
+python3 glm.py
+python3 yaml-cpp.py
+python3 SPIRV-Cross.py
+
+cd ..\..\
+
+.\premake5\premake5.exe gmake2
