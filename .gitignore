@@ -5,10 +5,13 @@
 bin
 lib
 obj
+external/include
+external/lib
 
 # Build files
 Makefile
 *.make
+*.cmake
 *.json
 
 # Testing files
